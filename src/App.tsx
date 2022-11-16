@@ -1,7 +1,8 @@
 import React from 'react'
-import { NativeBaseProvider, Box, extendTheme, ColorMode } from "native-base";
+import { NativeBaseProvider, Box, extendTheme, ColorMode, Text } from "native-base";
 
 import { customTheme } from './styles';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
   const theme = extendTheme(customTheme)
@@ -9,10 +10,13 @@ export default function App() {
 
 
   return (
-    // Custom theme from Native Base
-    <NativeBaseProvider theme={theme}>
-      <Box>Hello world</Box>
-      <Box bg="primary.500" p={4} />
-    </NativeBaseProvider>
+    // TODO Explain
+    <SafeAreaProvider>
+      {/* Custom theme from Native Base */}
+      <NativeBaseProvider theme={theme}>
+        <Box>Hello world</Box>
+        <Text fontFamily="body" fontWeight={600} fontStyle="italic">algo</Text>
+      </NativeBaseProvider>
+    </SafeAreaProvider>
   );
 }
