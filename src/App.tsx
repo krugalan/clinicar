@@ -1,8 +1,15 @@
 import React from 'react'
-import { NativeBaseProvider, Box, extendTheme, ColorMode, Text } from "native-base";
+import { NativeBaseProvider, extendTheme, Text, } from "native-base";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux'
+
+
 
 import { customTheme } from './styles';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import store, { persistor } from './app/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { AppNavigation } from './navigation';
+
 
 export default function App() {
   const theme = extendTheme(customTheme)
@@ -10,13 +17,16 @@ export default function App() {
 
 
   return (
-    // TODO Explain
     <SafeAreaProvider>
-      {/* Custom theme from Native Base */}
-      <NativeBaseProvider theme={theme}>
-        <Box>Hello world</Box>
-        <Text fontFamily="body" fontWeight={600} fontStyle="italic">algo</Text>
-      </NativeBaseProvider>
+      {/* redux provider  for persist APP data */}
+      <Provider store={store}>
+        <PersistGate persistor={persistor} loading={null}>
+          {/* Custom theme from Native Base */}
+          <NativeBaseProvider theme={theme}>
+            <AppNavigation />
+          </NativeBaseProvider>
+        </PersistGate>
+      </Provider>
     </SafeAreaProvider>
   );
 }
